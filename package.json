@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Expense Tracker App Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kjlove05/Technical-Exam-App.git"
+  },
+  "keywords": [
+    "MERN"
+  ],
+  "author": "kyle joshua",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kjlove05/Technical-Exam-App/issues"
+  },
+  "homepage": "https://github.com/Kjlove05/Technical-Exam-App#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
