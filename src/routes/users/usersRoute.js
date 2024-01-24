@@ -8,5 +8,6 @@ const userRoute = express.Router();
 
 userRoute.post("/register",registerUser);
 userRoute.get("/",fetchUsers);
-userRoute.get("/login",loginUser);
+userRoute.post("/login",loginUser);
+
 module.exports = userRoute;
