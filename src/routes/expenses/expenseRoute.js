@@ -4,15 +4,15 @@ const {
   fetchallExpenses,
   fetchsingleExpense,
   updateExpense,
-  deleteExpenseDetails
+  deleteExpenseDetails,
+  fetchTotalExpense
  } = require('../../controllers/expenses/expenseController');
- const authMiddleware = require('../../middlewares/authMiddleware');
 const expenseRoute = express.Router();
 
-expenseRoute.post('/',authMiddleware, createExpense);
-expenseRoute.get('/',authMiddleware, fetchallExpenses);
-expenseRoute.get('/:id',authMiddleware, fetchsingleExpense);
-expenseRoute.put('/:id',authMiddleware, updateExpense);
-expenseRoute.delete('/:id',authMiddleware, deleteExpenseDetails);
-
+expenseRoute.post('/create', createExpense);
+expenseRoute.get('/all',fetchallExpenses);
+expenseRoute.post('/single', fetchsingleExpense);
+expenseRoute.put('/:id', updateExpense);
+expenseRoute.delete('/:id', deleteExpenseDetails);
+expenseRoute.post('/totalExpense', fetchTotalExpense);
 module.exports = expenseRoute;

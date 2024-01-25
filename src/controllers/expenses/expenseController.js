@@ -4,13 +4,13 @@ const Expense = require('../../models/Expense');
 //create
 
 const createExpense = expressAsyncHandler(async (req, res) => {
-  const {title, amount, description, user} = req.body;
+  const {title, amount, description, user_id} = req.body;
   try {
     const expense = await Expense.create({
       title,
       amount,
       description,
-      user: req?.user?._id,
+      user_id
     });
     res.json(expense);
   }
@@ -22,9 +22,8 @@ const createExpense = expressAsyncHandler(async (req, res) => {
 // fetch all the income information
 
 const fetchallExpenses = expressAsyncHandler(async (req, res) => {
-  const {page} = req.query;
   try {
-    const expense = await Expense.paginate({}, {limit:10, page: Number(page), populate: "user" });
+    const expense = await Expense.find({});
     res.json(expense);
   }
   catch (err) {
@@ -35,11 +34,30 @@ const fetchallExpenses = expressAsyncHandler(async (req, res) => {
 //fetch single income
 
 const fetchsingleExpense = expressAsyncHandler(async (req, res) => {
-  const {id} = req?.params;
+  const {id} = req.body
+  console.log(id)
   
   try {
-    const expense = await Expense.findById(id);
+    const expense = await Expense.find({user_id: id});
     res.json(expense);
+  }
+  catch (err) {
+    res.json(err);
+}
+})
+
+//fetch all totalExpense
+
+const fetchTotalExpense = expressAsyncHandler(async (req, res) => {
+  const {id} = req.body
+  console.log(id)
+  
+  try {
+    const expense = await Expense.find({user_id: id});
+    const totalAmount = expense.reduce((accumulator, currentIncome) => {
+      return accumulator + currentIncome.amount;
+    }, 0);
+    res.json(totalAmount);
   }
   catch (err) {
     res.json(err);
@@ -74,4 +92,4 @@ const deleteExpenseDetails = expressAsyncHandler(async (req, res) => {
 }
 })
 
-module.exports = {createExpense, fetchallExpenses,fetchsingleExpense, updateExpense, deleteExpenseDetails};
+module.exports = {createExpense, fetchallExpenses,fetchsingleExpense, updateExpense, deleteExpenseDetails,fetchTotalExpense};
