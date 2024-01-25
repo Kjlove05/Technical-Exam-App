@@ -12,7 +12,7 @@ const registerUser = expressAsyncHandler(async (req, res) => {
   if (userExists) throw new Error("User already exists");
       
   try { 
-    const user = await User.create({ email,  firstname, lastname, password,  });
+    const user = await User.create({ email,  firstname, lastname, password,  success: true});
     res.status(200).json(user);
   } catch (error) {
     res.json(error);
@@ -51,4 +51,30 @@ const loginUser = expressAsyncHandler(async (req, res) => {
   throw new Error('Invalid Login Credentials');
   }
 })
-module.exports = {registerUser,fetchUsers, loginUser};
+
+const updateUser = expressAsyncHandler(async(req, res) => {
+  const {id} = req?.params;
+  const {password, firstname ,email, lastname} = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(id,{
+      password, firstname ,email, lastname
+    },{new: true});
+    res.json(user)
+  } catch (err) {
+    res.json(err);
+  }
+})
+
+const deleteUser = async (req, res) => {
+  const {id} = req?.params;
+  
+  try {
+    const user = await User.findByIdAndDelete(id);
+    res.json(user);
+  }
+  catch (err) {
+    res.json(err);
+}
+}
+
+module.exports = {registerUser,fetchUsers, loginUser,updateUser, deleteUser};
